@@ -1,0 +1,45 @@
+﻿@page "/"
+@using Models;
+@using Utils;
+
+@inject PokeClient client;
+
+<div class=" bg-slate-800 py-8 antialiased">
+
+
+    <h2 class="text-2xl font-bold text-gray-100 py-20 px-8">Pokemons</h2>
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid grid-cols-5 gap-4">
+        @foreach (var pokemon in pokemonList)
+        {
+            <div class="rounded shadow-lg shadow-blac-900/50 p-2 dark:bg-slate-600 flex flex-col">
+                <img class="flex" src="@pokemon.sprites.front_default" alt="Pokemon Sprite">
+                <h1 class="font-bold text-xs text-gray-400 mb-4">N. @pokemon.id</h1>
+                <h1 class="text-md font-semibold uppercase m-auto mb-4">@pokemon.name</h1>
+                <div class="grid grid-rows-1 grid-flow-col gap-2 mb-2">
+                    @foreach (var type in pokemon.types)
+                    {
+                        var typeColor = @PokeColor.GetTypeColor(@type.type.name);
+
+                        <span class="@typeColor text-white text-xs font-medium mr-2 px-2.5 py-0.5 rounded uppercase">
+                            @type.type.name
+                        </span>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+
+    List<Pokemon> pokemonList = new List<Pokemon>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        for (int i = 1; i < 20; i++)
+        {
+            pokemonList.Add(await client.GetPokemonAsync(i.ToString()));
+            StateHasChanged();
+        };
+    }
+}

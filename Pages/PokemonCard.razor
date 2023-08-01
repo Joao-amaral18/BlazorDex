@@ -1,0 +1,21 @@
+@page "/pokemon"
+@using Models;
+@using Utils;
+
+@inject PokeClient client;
+
+<h1>@pokemon.name</h1>
+<img src="@pokemon.sprites.front_shiny" alt="">
+
+
+@code{
+    Pokemon pokemon = new Pokemon();
+    protected async override Task OnInitializedAsync(){
+        pokemon = await client.GetPokemonAsync("1");
+    }
+     private string Sprite = pokemon.sprites.front_default
+     private void UpdateSprite()
+    {
+        Sprite = pokemon.sprites.front_shiny;
+    }
+}
