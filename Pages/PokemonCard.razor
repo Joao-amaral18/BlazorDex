@@ -13,9 +13,4 @@
     protected async override Task OnInitializedAsync(){
         pokemon = await client.GetPokemonAsync("1");
     }
-     private string Sprite = pokemon.sprites.front_default
-     private void UpdateSprite()
-    {
-        Sprite = pokemon.sprites.front_shiny;
-    }
 }

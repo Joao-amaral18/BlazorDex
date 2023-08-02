@@ -1,0 +1,29 @@
+// PreloaderComponent.razor
+@page "/preloader"
+
+<div>
+    @if (isLoading)
+    {
+
+     
+    }
+    else
+    {
+        @ChildContent
+    }
+</div>
+
+@code {
+    public RenderFragment ChildContent { get; set; }
+
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Simulate an async task. Replace this with your actual async data loading.
+        await Task.Delay(3000); // Replace this with your actual async data loading method.
+
+        isLoading = false;
+        StateHasChanged();
+    }
+}
